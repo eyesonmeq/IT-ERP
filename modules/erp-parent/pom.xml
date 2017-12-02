@@ -29,6 +29,7 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<tk.mybatis.mapper.version>3.3.0</tk.mybatis.mapper.version>
 	</properties>
 	
 	<dependencies>
