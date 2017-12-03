@@ -29,7 +29,13 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<tk.mybatis.mapper.version>3.3.0</tk.mybatis.mapper.version>
+		<mybatis.version>3.3.1</mybatis.version>
+		<mybatis.spring.version>1.2.4</mybatis.spring.version>
+		<mapper.version>3.3.9</mapper.version>
+		<pagehelper.version>4.1.1</pagehelper.version>
+		<mysql.version>5.1.29</mysql.version>
+        <jackson.version>2.8.5</jackson.version>
+		<servlet.version>3.0.1</servlet.version>
 	</properties>
 	
 	<dependencies>
@@ -57,14 +63,6 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<fork>true</fork>
 				</configuration>
 			</plugin>
 		</plugins>
