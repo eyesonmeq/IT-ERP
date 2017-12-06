@@ -9,7 +9,7 @@ package com.angel.erp.common.exception;
  * @date: 2017年12月2日 下午4:04:57
  * @author li_ming 
  */
-public class SecurityException extends Exception {
+public class SecurityException extends RuntimeException {
 
 	private static final long serialVersionUID = 3452341605040319264L;
 
