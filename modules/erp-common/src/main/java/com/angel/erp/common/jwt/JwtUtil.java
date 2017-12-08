@@ -41,19 +41,19 @@ public class JwtUtil {
 		return null;
 	}
 
-	public String createJWT(Member member, String sessionId, String base64Security) {
-		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-
-		//生成签名密钥
-		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
-		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-		//添加构成JWT的参数
-		JwtBuilder builder = Jwts.builder().setId(member.getUid()).setSubject(member.getAccount())
-				//.setIssuer(issuer)
-				.setAudience(sessionId).signWith(signatureAlgorithm, signingKey)
-				.setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
-				.setNotBefore(new Date(System.currentTimeMillis()));
-		//生成JWT
-		return builder.compact();
-	}
+//	public String createJWT(Member member, String sessionId, String base64Security) {
+//		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+//
+//		//生成签名密钥
+//		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
+//		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+//		//添加构成JWT的参数
+//		JwtBuilder builder = Jwts.builder().setId(member.getUid()).setSubject(member.getAccount())
+//				//.setIssuer(issuer)
+//				.setAudience(sessionId).signWith(signatureAlgorithm, signingKey)
+//				.setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
+//				.setNotBefore(new Date(System.currentTimeMillis()));
+//		//生成JWT
+//		return builder.compact();
+//	}
 }
