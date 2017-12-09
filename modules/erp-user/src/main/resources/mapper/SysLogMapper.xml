@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.angel.erp.mapper.SysLogMapper">
+  <resultMap id="BaseResultMap" type="com.angel.erp.model.SysLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SYS_ACCOUNT" jdbcType="VARCHAR" property="sysAccount" />
+    <result column="ACTION" jdbcType="VARCHAR" property="action" />
+    <result column="RES" jdbcType="VARCHAR" property="res" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="LOG_TIME" jdbcType="TIMESTAMP" property="logTime" />
+    <result column="PARAMTERS" jdbcType="LONGVARCHAR" property="paramters" />
+  </resultMap>
+</mapper>

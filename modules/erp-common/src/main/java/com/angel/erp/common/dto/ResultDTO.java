@@ -3,7 +3,9 @@
  */
 package com.angel.erp.common.dto;
 
-import com.alibaba.fastjson.JSON;
+import java.io.Serializable;
+
+import com.angel.erp.common.util.JsonUtil;
 
 /**
  * 统一API响应结果封装
@@ -11,9 +13,13 @@ import com.alibaba.fastjson.JSON;
  * @date: 2017年12月6日 下午11:06:00
  * @author li_ming 
  */
-public class ResultDTO {
+public class ResultDTO implements Serializable {
+	private static final long serialVersionUID = 6085491328987799L;
+	// 响应结果编码
 	private int code;
+	// 提示信息
 	private String message;
+	// 返回结果
 	private Object data;
 
 	public int getCode() {
@@ -45,7 +51,7 @@ public class ResultDTO {
 
 	@Override
 	public String toString() {
-		return JSON.toJSONString(this);
+		return JsonUtil.toJson(this);
 	}
 
 	public enum ResultCode {
