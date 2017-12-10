@@ -26,6 +26,7 @@ import org.springframework.context.annotation.DependsOn;
  * @author li_ming 
  */
 public abstract class AbstractShiroConfiguration {
+	
 	/**
 	 * LifecycleBeanPostProcessor，这是个DestructionAwareBeanPostProcessor的子类，
 	 * 负责org.apache.shiro.util.Initializable类型bean的生命周期的，初始化和销毁。
