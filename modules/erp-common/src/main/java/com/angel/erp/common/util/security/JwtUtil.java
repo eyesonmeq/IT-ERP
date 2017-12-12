@@ -9,6 +9,12 @@ import java.util.Date;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
+import com.angel.erp.common.constant.JWTConstant;
+import com.angel.erp.common.dto.AuthenticationTokenDTO;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -21,50 +27,46 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * @author li_ming 
  */
 public class JwtUtil {
+
 	/**
 	 * 解析token
 	 *
 	 * @param jsonWebToken
-	 * @param base64Security
 	 * @return 
 	 */
-	public static Claims parseJWT(String jsonWebToken, String base64Security) {
-		try {
-			Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(base64Security))
-					.parseClaimsJws(jsonWebToken).getBody();
-			return claims;
-		} catch (Exception ex) {
-			return null;
-		}
+	public static AuthenticationTokenDTO parseJWT(String jsonWebToken) {
+		String base64Security = JWTConstant.JWT_BASE64_SECRET;
+		Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(base64Security))
+				.parseClaimsJws(jsonWebToken).getBody();
+		AuthenticationTokenDTO authenticationToken = new AuthenticationTokenDTO();
+		authenticationToken.setToken(jsonWebToken);
+		authenticationToken.setUserName(String.valueOf(claims.get(JWTConstant.USER_ACCOUNT)));
+		authenticationToken.setAuth(String.valueOf(claims.get(JWTConstant.USER_PASSWORD)));
+		return authenticationToken;
 	}
 
 	/**
 	 * 生成token 
 	 *
 	 * @param name
-	 * @param userId
-	 * @param role
+	 * @param password
 	 * @param audience
 	 * @param issuer
-	 * @param TTLMillis
-	 * @param base64Security
 	 * @return 
 	 */
-	public static String createJWT(String name, String userId, String role, String audience, String issuer,
-			long TTLMillis, String base64Security) {
+	public static String createJWT(String name, String password, String audience, String issuer) {
+		long TTLMillis = JWTConstant.JWT_EXPIRES_SECOND;
+		String base64Security = JWTConstant.JWT_BASE64_SECRET;
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-
 		long nowMillis = System.currentTimeMillis();
 		Date now = new Date(nowMillis);
-
 		//生成签名密钥  
 		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-
 		//添加构成JWT的参数  
-		JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT").claim("role", role).claim("unique_name", name)
-				.claim("userid", userId).setIssuer(issuer).setAudience(audience)
-				.signWith(signatureAlgorithm, signingKey);
+		JwtBuilder builder = Jwts.builder().setHeaderParam(JWTConstant.TYPE, "JWT")
+				.claim(JWTConstant.USER_PASSWORD, password).claim(JWTConstant.USER_ACCOUNT, name).setIssuer(issuer)
+				.setAudience(audience).signWith(signatureAlgorithm, signingKey);
 		//添加Token过期时间  
 		if (TTLMillis >= 0) {
 			long expMillis = nowMillis + TTLMillis;
@@ -73,5 +75,16 @@ public class JwtUtil {
 		}
 		//生成JWT  
 		return builder.compact();
+	}
+
+	/**
+	 * 获取登录用户
+	 *
+	 * @return 
+	 */
+	public static AuthenticationTokenDTO getLoginUser() {
+		Subject currentUser = SecurityUtils.getSubject();
+		AuthenticationTokenDTO user = parseJWT(currentUser.getPrincipal().toString());
+		return user == null ? null : user;
 	}
 }

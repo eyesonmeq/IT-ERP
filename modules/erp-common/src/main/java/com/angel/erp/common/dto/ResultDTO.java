@@ -13,20 +13,36 @@ import com.angel.erp.common.util.JsonUtil;
  * @date: 2017年12月6日 下午11:06:00
  * @author li_ming 
  */
-public class ResultDTO implements Serializable {
+public class ResultDTO<T> implements Serializable {
 	private static final long serialVersionUID = 6085491328987799L;
 	// 响应结果编码
 	private int code;
 	// 提示信息
 	private String message;
 	// 返回结果
-	private Object data;
+	private T data;
+
+	public ResultDTO() {}
+
+	public ResultDTO(T data) {
+		this.setCode(ResultCode.SUCCESS.code);
+		this.setMessage(DEFAULT_SUCCESS_MESSAGE);
+		this.setData(data);
+	}
+
+	public static ResultDTO<Object> genSuccessResult() {
+		return new ResultDTO<Object>().setCode(ResultCode.SUCCESS.code).setMessage(DEFAULT_SUCCESS_MESSAGE);
+	}
+
+	public static ResultDTO<Object> genFailResult(String message) {
+		return new ResultDTO<Object>().setCode(ResultCode.FAIL.code).setMessage(message);
+	}
 
 	public int getCode() {
 		return code;
 	}
 
-	public ResultDTO setCode(int code) {
+	public ResultDTO<T> setCode(int code) {
 		this.code = code;
 		return this;
 	}
@@ -35,7 +51,7 @@ public class ResultDTO implements Serializable {
 		return message;
 	}
 
-	public ResultDTO setMessage(String message) {
+	public ResultDTO<T> setMessage(String message) {
 		this.message = message;
 		return this;
 	}
@@ -44,7 +60,7 @@ public class ResultDTO implements Serializable {
 		return data;
 	}
 
-	public ResultDTO setData(Object data) {
+	public ResultDTO<T> setData(T data) {
 		this.data = data;
 		return this;
 	}
@@ -68,16 +84,4 @@ public class ResultDTO implements Serializable {
 	}
 
 	private static final String DEFAULT_SUCCESS_MESSAGE = "SUCCESS";
-
-	public static ResultDTO genSuccessResult() {
-		return new ResultDTO().setCode(ResultCode.SUCCESS.code).setMessage(DEFAULT_SUCCESS_MESSAGE);
-	}
-
-	public static ResultDTO genSuccessResult(Object data) {
-		return new ResultDTO().setCode(ResultCode.SUCCESS.code).setMessage(DEFAULT_SUCCESS_MESSAGE).setData(data);
-	}
-
-	public static ResultDTO genFailResult(String message) {
-		return new ResultDTO().setCode(ResultCode.FAIL.code).setMessage(message);
-	}
 }

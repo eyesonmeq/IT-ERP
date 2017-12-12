@@ -5,6 +5,7 @@ package com.angel.erp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 启动程序
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author li_ming 
  */
 @SpringBootApplication
+@EnableTransactionManagement
 public class ErpUserApplication {
 
 	public static void main(String[] args) {
