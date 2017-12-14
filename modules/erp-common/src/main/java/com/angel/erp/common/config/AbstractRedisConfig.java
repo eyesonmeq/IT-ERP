@@ -16,7 +16,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -56,8 +55,9 @@ public abstract class AbstractRedisConfig extends CachingConfigurerSupport {
 	 * @param redisTemplate
 	 * @return 
 	 */
+	@SuppressWarnings("rawtypes")
 	@Bean
-	public CacheManager cacheManager(RedisTemplate<String, String> redisTemplate) {
+	public CacheManager cacheManager(RedisTemplate redisTemplate) {
 		RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
 		//设置缓存过期时间(秒)
 		redisCacheManager.setDefaultExpiration(60);
@@ -86,7 +86,7 @@ public abstract class AbstractRedisConfig extends CachingConfigurerSupport {
 	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory connectionFactory,
 			RedisSerializer fastJson2JsonRedisSerializer) {
 		StringRedisTemplate template = new StringRedisTemplate(connectionFactory);
-		template.setKeySerializer(new StringRedisSerializer());
+		//template.setKeySerializer(new StringRedisSerializer());
 		template.setValueSerializer(fastJson2JsonRedisSerializer);
 		template.afterPropertiesSet();
 		return template;
