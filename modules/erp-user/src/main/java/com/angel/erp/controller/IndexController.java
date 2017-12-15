@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.angel.erp.common.util.DateUtil;
-
 /**
  * ADD FUNCTION
  *
@@ -38,9 +36,7 @@ public class IndexController {
 		logger.warn("This is a warn message");
 		logger.error("This is an error message");
 
-		String rq = DateUtil.getCurrentTime();
-		System.out.println(rq);
-		model.addAttribute("rq", rq);
+		model.addAttribute("rq", null);
 		return "test/test";
 	}
 

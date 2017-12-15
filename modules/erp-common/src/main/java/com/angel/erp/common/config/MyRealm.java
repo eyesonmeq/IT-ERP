@@ -21,13 +21,14 @@ import com.angel.erp.common.dto.AuthenticationTokenDTO;
 import com.angel.erp.common.util.security.JwtUtil;
 
 /**
- * ADD FUNCTION
+ * 自定义Realm
  *
  * @date: 2017年12月12日 下午3:46:15
  * @author li_ming 
  */
 public class MyRealm extends AuthorizingRealm {
 
+	@SuppressWarnings("rawtypes")
 	@Autowired
 	private RedisTemplate redisTemplate;
 

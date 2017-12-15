@@ -1,192 +1,172 @@
-drop table if exists ROLE_PERMISSION_RELATIONSHIP;
+drop table if exists role_permission_link;
 
-drop table if exists SYS_LOG;
+drop index idx_user_name on sys_log;
 
-drop table if exists SYS_PERMISSION;
+drop table if exists sys_log;
 
-drop table if exists SYS_ROLE;
+drop table if exists sys_organization;
 
-drop table if exists SYS_USER;
+drop table if exists sys_permission;
 
-drop table if exists USER_ROLE_RELATIONSHIP;
+drop table if exists sys_role;
+
+drop table if exists sys_user;
+
+drop table if exists user_organization_link;
+
+drop table if exists user_permission_link;
+
+drop table if exists user_role_link;
 
 /*==============================================================*/
-/* Table: ROLE_PERMISSION_RELATIONSHIP                          */
+/* Table: role_permission_link                                  */
 /*==============================================================*/
-create table ROLE_PERMISSION_RELATIONSHIP
+create table role_permission_link
 (
-   ID                   int not null comment '主键',
-   CODE                 varchar(20) not null comment '主键',
-   primary key (ID, CODE)
+   role_id              bigint not null comment '角色主键',
+   permission_id        bigint not null comment '权限主键',
+   primary key (role_id, permission_id)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-alter table ROLE_PERMISSION_RELATIONSHIP comment '角色权限关系';
+alter table role_permission_link comment '角色权限关系';
 
 /*==============================================================*/
-/* Table: SYS_LOG                                               */
+/* Table: sys_log                                               */
 /*==============================================================*/
-create table SYS_LOG
+create table sys_log
 (
-   ID                   int not null auto_increment comment '主键',
-   SYS_ACCOUNT          varchar(50) comment '账户',
-   ACTION               varchar(2000) not null comment '活动',
-   PARAMTERS            text not null comment '参数',
-   RES                  varchar(2000) not null comment '资源',
-   ACCOUNT              varchar(50) not null comment '账户',
-   IP                   varchar(100) not null comment '访问IP',
-   LOG_TIME             datetime not null comment '记录时间',
-   primary key (ID)
-)
-auto_increment = 1
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-alter table SYS_LOG comment '系统日志';
-
-/*==============================================================*/
-/* Table: SYS_ORGANIZATION                                      */
-/*==============================================================*/
-create table SYS_ORGANIZATION
-(
-   ID                   int not null auto_increment comment '主键',
-   PARENT_ID            int comment '所属上级',
-   NAME                 varchar(50) not null comment '名称',
-   primary key (ID)
+   id                   bigint unsigned not null auto_increment comment '主键',
+   gmt_create           datetime not null comment '创建时间',
+   gmt_modified         datetime not null comment '变更时间',
+   activity             varchar(2000) not null comment '活动',
+   paramters            varchar(4000) comment '参数',
+   res                  varchar(2000) not null comment '资源',
+   ip                   varchar(100) not null comment '访问IP',
+   user_name            varchar(20) not null comment '用户名',
+   primary key (id)
 )
 auto_increment = 1
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-alter table SYS_ORGANIZATION comment '系统组织';
+alter table sys_log comment '系统日志';
 
 /*==============================================================*/
-/* Table: SYS_PERMISSION                                        */
+/* Index: idx_user_name                                         */
 /*==============================================================*/
-create table SYS_PERMISSION
+create index idx_user_name on sys_log
 (
-   CODE                 varchar(20) not null comment '主键',
-   SYS_CODE             varchar(20) comment '主键',
-   ACCOUNT              varchar(50) comment '账户',
-   NAME                 varchar(50) not null comment '名称',
-   ACTION               varchar(500) not null comment '动作',
-   PARENT_ID            varchar(20) comment '父权限',
-   primary key (CODE)
+   user_name
+);
+
+/*==============================================================*/
+/* Table: sys_organization                                      */
+/*==============================================================*/
+create table sys_organization
+(
+   id                   bigint unsigned not null auto_increment comment '主键',
+   gmt_create           datetime not null comment '创建时间',
+   gmt_modified         datetime not null comment '变更时间',
+   parent_id            bigint comment '所属上级',
+   org_name             varchar(50) not null comment '组织名称',
+   primary key (id)
+);
+
+alter table sys_organization comment '系统组织';
+
+/*==============================================================*/
+/* Table: sys_permission                                        */
+/*==============================================================*/
+create table sys_permission
+(
+   id                   bigint unsigned not null auto_increment comment '主键',
+   gmt_create           datetime not null comment '创建时间',
+   gmt_modified         datetime not null comment '变更时间',
+   permission_code      varchar(20) not null comment '权限编码',
+   permission_name      varchar(50) not null comment '权限名称',
+   url                  varchar(500) not null comment 'url',
+   parent_id            bigint comment '父权限',
+   primary key (id)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-alter table SYS_PERMISSION comment '系统权限';
+alter table sys_permission comment '系统权限';
 
 /*==============================================================*/
-/* Table: SYS_ROLE                                              */
+/* Table: sys_role                                              */
 /*==============================================================*/
-create table SYS_ROLE
+create table sys_role
 (
-   ID                   int not null auto_increment comment '主键',
-   NAME                 varchar(50) not null comment '名称',
-   primary key (ID)
-)
-auto_increment = 1
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-alter table SYS_ROLE comment '系统角色';
-
-/*==============================================================*/
-/* Table: SYS_USER                                              */
-/*==============================================================*/
-create table SYS_USER
-(
-   ACCOUNT              varchar(50) not null comment '账户',
-   NAME                 varchar(50) not null comment '姓名',
-   PASSWORD             varchar(50) not null comment '密码',
-   STATE                smallint not null comment '状态',
-   SALT                 varchar(32) comment '盐',
-   CREATE_TIME          datetime not null comment '创建时间',
-   primary key (ACCOUNT)
+   id                   bigint unsigned not null auto_increment comment '主键',
+   gmt_create           datetime not null comment '创建时间',
+   gmt_modified         datetime not null comment '变更时间',
+   role_name            varchar(50) not null comment '角色名称',
+   primary key (id)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-alter table SYS_USER comment '系统用户';
+alter table sys_role comment '系统角色';
 
 /*==============================================================*/
-/* Table: USER_ORGANIZATION_RELATIONSHIP                        */
+/* Table: sys_user                                              */
 /*==============================================================*/
-create table USER_ORGANIZATION_RELATIONSHIP
+create table sys_user
 (
-   ACCOUNT              varchar(50) not null comment '账户',
-   ID                   int not null comment '主键',
-   primary key (ACCOUNT, ID)
+   id                   bigint unsigned not null auto_increment comment '主键',
+   gmt_create           datetime not null comment '创建时间',
+   gmt_modified         datetime not null comment '变更时间',
+   user_name            varchar(20) not null comment '用户名',
+   nickname             varchar(50) not null comment '用户昵称',
+   user_password        varchar(50) not null comment '密码',
+   user_state           tinyint unsigned not null comment '用户状态（1：正常，2：停用，3：锁定）',
+   salt                 varchar(32) comment '盐',
+   primary key (id),
+   unique key AK_uk_user_name (user_name)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-alter table USER_ORGANIZATION_RELATIONSHIP comment '用户组织关系';
+alter table sys_user comment '系统用户';
 
 /*==============================================================*/
-/* Table: USER_ROLE_RELATIONSHIP                                */
+/* Table: user_organization_link                                */
 /*==============================================================*/
-create table USER_ROLE_RELATIONSHIP
+create table user_organization_link
 (
-   ACCOUNT              varchar(50) not null comment '账户',
-   ID                   int not null comment '主键',
-   primary key (ACCOUNT, ID)
+   user_id              bigint not null comment '用户主键',
+   org_id               bigint not null comment '组织主键',
+   primary key (user_id, org_id)
+);
+
+alter table user_organization_link comment '用户组织关系';
+
+/*==============================================================*/
+/* Table: user_permission_link                                  */
+/*==============================================================*/
+create table user_permission_link
+(
+   user_id              bigint not null comment '用户主键',
+   permission_id        bigint not null comment '权限主键',
+   permission_type      tinyint unsigned not null comment '权限类型（1：新增，2：删除）',
+   primary key (user_id, permission_id)
+);
+
+alter table user_permission_link comment '用户权限关系';
+
+/*==============================================================*/
+/* Table: user_role_link                                        */
+/*==============================================================*/
+create table user_role_link
+(
+   user_id              bigint not null comment '用户主键',
+   role_id              bigint not null comment '角色主键',
+   primary key (user_id, role_id)
 )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-alter table USER_ROLE_RELATIONSHIP comment '用户角色关系';
-
-drop table if exists CUSTOMER;
-
-drop table if exists CUSTOMER_CATEGORY;
-
-/*==============================================================*/
-/* Table: CUSTOMER                                              */
-/*==============================================================*/
-create table CUSTOMER
-(
-   ID                   int not null auto_increment,
-   CUS_ID               int not null,
-   CATEGORY_ID          int not null,
-   CODE                 varchar(50) not null,
-   NAME                 varchar(100) not null,
-   CONTACT              varchar(50),
-   TEL                  varchar(20),
-   QQ                   varchar(50),
-   MOBILE               varchar(11),
-   ADDRESS              varchar(255),
-   ADDRESS_SHIPPING     varchar(255),
-   ADDRESS_RECEIPT      varchar(255),
-   BANK_NAME            varchar(100),
-   BANK_ACCOUNT         varchar(100),
-   TAX_NUMBER           varchar(100),
-   FAX                  varchar(20),
-   primary key (ID)
-)
-auto_increment = 1
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-alter table CUSTOMER comment '客户';
-
-/*==============================================================*/
-/* Table: CUSTOMER_CATEGORY                                     */
-/*==============================================================*/
-create table CUSTOMER_CATEGORY
-(
-   ID                   int not null auto_increment,
-   NAME                 varchar(50) not null,
-   PARENT_ID            int,
-   primary key (ID)
-)
-auto_increment = 1
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-alter table CUSTOMER_CATEGORY comment '客户分类';
-
-
+alter table user_role_link comment '用户角色关系';

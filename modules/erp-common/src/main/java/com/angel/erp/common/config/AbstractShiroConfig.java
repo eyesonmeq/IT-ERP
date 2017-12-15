@@ -61,36 +61,46 @@ public abstract class AbstractShiroConfig {
 		shiroFilterFactoryBean.setFilters(filters);
 
 		Map<String, String> filterRuleMap = new LinkedHashMap<String, String>();
+		// 配置不会被拦截的链接 顺序判断
+		filterRuleMap.put("/static/**", "anon");
+		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
+		filterRuleMap.put("/logout", "logout");
+		//<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
+		//<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
+		filterRuleMap.put("/**", "authc");
+		filterRuleMap.putAll(this.getFilterRuleMap());
 		filterRuleMap.put("/edit", "jwt, perms[edit]");
 		filterRuleMap.put("/admin/**", "jwt, roles[admin]");
 		filterRuleMap.put("/annotation/**", "jwt");
-		filterRuleMap.put("/**", "anon");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
 
+		shiroFilterFactoryBean.setLoginUrl("/login");
 		shiroFilterFactoryBean.setSuccessUrl("/");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		return shiroFilterFactoryBean;
 	}
 
 	/**
-     * 下面的代码是添加注解支持
-     */
-    @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        return new DefaultAdvisorAutoProxyCreator();
-    }
+	 * 下面的代码是添加注解支持
+	 */
+	@Bean
+	@DependsOn("lifecycleBeanPostProcessor")
+	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+		return new DefaultAdvisorAutoProxyCreator();
+	}
 
-    @Bean
+	@Bean
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
+		return new LifecycleBeanPostProcessor();
+	}
 
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
-        return advisor;
-    }
-	
+	@Bean
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
+			DefaultWebSecurityManager securityManager) {
+		AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+		advisor.setSecurityManager(securityManager);
+		return advisor;
+	}
+
+	public abstract Map<String, String> getFilterRuleMap();
 }

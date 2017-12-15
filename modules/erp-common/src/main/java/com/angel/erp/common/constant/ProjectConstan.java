@@ -17,5 +17,5 @@ public class ProjectConstan {
 	// Mapper所在包
 	public static final String MAPPER_PACKAGE = BASE_PACKAGE + ".mapper";
 	// Mapper插件基础接口的完全限定名
-	public static final String MAPPER_INTERFACE_REFERENCE = BASE_PACKAGE + ".common.mybatis.CustomerMapper";
+	public static final String MAPPER_INTERFACE_REFERENCE = BASE_PACKAGE + ".common.mapper.CustomerMapper";
 }

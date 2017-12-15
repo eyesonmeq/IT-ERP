@@ -13,11 +13,14 @@ import org.apache.shiro.util.ByteSource;
  * @author li_ming 
  */
 public class PasswordUtil {
-	public static String createAdminPwd(String password, String salt) {
+	/**
+	 * 生成密码
+	 *
+	 * @param password
+	 * @param salt
+	 * @return 
+	 */
+	public static String createPwd(String password, String salt) {
 		return new SimpleHash("md5", password, ByteSource.Util.bytes(salt), 2).toHex();
-	}
-
-	public static String createCustomPwd(String password, String salt) {
-		return new SimpleHash("md5", password, ByteSource.Util.bytes(salt), 1).toHex();
 	}
 }

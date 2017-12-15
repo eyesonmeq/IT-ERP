@@ -2,10 +2,7 @@ package com.angel.erp.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -16,7 +13,7 @@ import com.angel.erp.common.util.JsonUtil;
 /**
  * 系统用户
  *
- * @date: 2017年12月9日 下午6:13:44
+ * @date: 2017年12月15日 下午11:54:24
  * @author li_ming 
  */
 @Table(name = "sys_user")
@@ -24,122 +21,185 @@ public class SysUserDO implements Serializable {
 	private static final long serialVersionUID = 8500968401115848516L;
 
 	/**
-	 * 账户
+	 * 主键
 	 */
 	@Id
-	@Column(name = "ACCOUNT")
-	private String account;
-
-	/**
-	 * 姓名
-	 */
-	@NotBlank
-	@Size(min = 1, max = 50)
-	@Pattern(regexp = "^[a-zA-Z_][\\w]{4,19}$", message = "{user.name.pattern.error}")
-	@Column(name = "NAME")
-	private String name;
-
-	/**
-	 * 密码
-	 */
-	@Size(min = 6, max = 25, message = "{user.password.length.error}")
-	@Column(name = "PASSWORD")
-	private String password;
-
-	/**
-	 * 状态
-	 */
-	@Column(name = "STATE")
-	private Short state;
-
-	/**
-	 * 盐
-	 */
-	@Column(name = "SALT")
-	private String salt;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	/**
 	 * 创建时间
 	 */
-	@Column(name = "CREATE_TIME")
-	private Date createTime;
+	@Column(name = "gmt_create")
+	private Date gmtCreate;
 
 	/**
-	 * 获取账户
-	 *
-	 * @return ACCOUNT - 账户
+	 * 变更时间
 	 */
-	public String getAccount() {
-		return account;
+	@Column(name = "gmt_modified")
+	private Date gmtModified;
+
+	/**
+	 * 用户名
+	 */
+	@Column(name = "user_name")
+	private String userName;
+
+	/**
+	 * 用户昵称
+	 */
+	@NotBlank
+	@Size(min = 1, max = 50)
+	@Pattern(regexp = "^[a-zA-Z_][\\w]{4,19}$", message = "{user.name.pattern.error}")
+	private String nickname;
+
+	/**
+	 * 密码
+	 */
+	@Column(name = "user_password")
+	private String userPassword;
+
+	/**
+	 * 用户状态（1：正常，2：停用，3：锁定）
+	 */
+	@Column(name = "user_state")
+	private Byte userState;
+
+	/**
+	 * 盐
+	 */
+	private String salt;
+
+	/**
+	 * 获取主键
+	 *
+	 * @return id - 主键
+	 */
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * 设置账户
+	 * 设置主键
 	 *
-	 * @param account 账户
+	 * @param id 主键
 	 */
-	public void setAccount(String account) {
-		this.account = account;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
-	 * 获取姓名
+	 * 获取创建时间
 	 *
-	 * @return NAME - 姓名
+	 * @return gmt_create - 创建时间
 	 */
-	public String getName() {
-		return name;
+	public Date getGmtCreate() {
+		return gmtCreate;
 	}
 
 	/**
-	 * 设置姓名
+	 * 设置创建时间
 	 *
-	 * @param name 姓名
+	 * @param gmtCreate 创建时间
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setGmtCreate(Date gmtCreate) {
+		this.gmtCreate = gmtCreate;
+	}
+
+	/**
+	 * 获取变更时间
+	 *
+	 * @return gmt_modified - 变更时间
+	 */
+	public Date getGmtModified() {
+		return gmtModified;
+	}
+
+	/**
+	 * 设置变更时间
+	 *
+	 * @param gmtModified 变更时间
+	 */
+	public void setGmtModified(Date gmtModified) {
+		this.gmtModified = gmtModified;
+	}
+
+	/**
+	 * 获取用户名
+	 *
+	 * @return user_name - 用户名
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * 设置用户名
+	 *
+	 * @param userName 用户名
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * 获取用户昵称
+	 *
+	 * @return nickname - 用户昵称
+	 */
+	public String getNickname() {
+		return nickname;
+	}
+
+	/**
+	 * 设置用户昵称
+	 *
+	 * @param nickname 用户昵称
+	 */
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	/**
 	 * 获取密码
 	 *
-	 * @return PASSWORD - 密码
+	 * @return user_password - 密码
 	 */
-	public String getPassword() {
-		return password;
+	public String getUserPassword() {
+		return userPassword;
 	}
 
 	/**
 	 * 设置密码
 	 *
-	 * @param password 密码
+	 * @param userPassword 密码
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
 	/**
-	 * 获取状态
+	 * 获取用户状态（1：正常，2：停用，3：锁定）
 	 *
-	 * @return STATE - 状态
+	 * @return user_state - 用户状态（1：正常，2：停用，3：锁定）
 	 */
-	public Short getState() {
-		return state;
+	public Byte getUserState() {
+		return userState;
 	}
 
 	/**
-	 * 设置状态
+	 * 设置用户状态（1：正常，2：停用，3：锁定）
 	 *
-	 * @param state 状态
+	 * @param userState 用户状态（1：正常，2：停用，3：锁定）
 	 */
-	public void setState(Short state) {
-		this.state = state;
+	public void setUserState(Byte userState) {
+		this.userState = userState;
 	}
 
 	/**
 	 * 获取盐
 	 *
-	 * @return SALT - 盐
+	 * @return salt - 盐
 	 */
 	public String getSalt() {
 		return salt;
@@ -154,58 +214,58 @@ public class SysUserDO implements Serializable {
 		this.salt = salt;
 	}
 
-	/**
-	 * 获取创建时间
-	 *
-	 * @return CREATE_TIME - 创建时间
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	/**
-	 * 设置创建时间
-	 *
-	 * @param createTime 创建时间
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
 	@Override
 	public String toString() {
 		return JsonUtil.toJson(this);
 	}
 
+	/* 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((gmtCreate == null) ? 0 : gmtCreate.hashCode());
+		result = prime * result + ((gmtModified == null) ? 0 : gmtModified.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
 
+	/* 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		SysUserDO other = (SysUserDO) obj;
-		if (account == null) {
-			if (other.account != null) {
+		if (gmtCreate == null) {
+			if (other.gmtCreate != null)
 				return false;
-			}
-		} else if (!account.equals(other.account)) {
+		} else if (!gmtCreate.equals(other.gmtCreate))
 			return false;
-		}
+		if (gmtModified == null) {
+			if (other.gmtModified != null)
+				return false;
+		} else if (!gmtModified.equals(other.gmtModified))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
 		return true;
 	}
+
 }

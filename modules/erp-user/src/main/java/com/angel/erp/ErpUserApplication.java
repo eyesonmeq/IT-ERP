@@ -3,6 +3,7 @@
  */
 package com.angel.erp;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringBootApplication
 @EnableTransactionManagement
+@MapperScan("com.angel.erp.mapper")
 public class ErpUserApplication {
 
 	public static void main(String[] args) {

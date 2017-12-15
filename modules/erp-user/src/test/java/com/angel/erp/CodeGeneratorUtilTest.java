@@ -3,8 +3,6 @@
  */
 package com.angel.erp;
 
-import org.junit.Test;
-
 import com.angel.erp.common.util.CodeGeneratorUtil;
 
 /**
@@ -14,9 +12,9 @@ import com.angel.erp.common.util.CodeGeneratorUtil;
  * @author li_ming 
  */
 public class CodeGeneratorUtilTest {
-	@Test
-	public void genCode() {
+	
+	public static void main(String[] args) {
 		CodeGeneratorUtil.genCode("sys_user", "sys_log", "sys_organization", "sys_permission", "sys_role",
-				"user_organization_relationship", "user_role_relationship");
+				"user_organization_link", "user_role_link","role_permission_link","user_permission_link");
 	}
 }

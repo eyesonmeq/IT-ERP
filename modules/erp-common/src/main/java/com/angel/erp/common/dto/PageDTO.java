@@ -21,10 +21,10 @@ public class PageDTO<T> implements Serializable {
 	private int currentPage = 1;
 	// 每页条数
 	private int pageSize = 10;
+	// 查询条件
+	private T queryriteria;
 	// 总条数
 	private int totalCount;
-	// 总页数
-	private int pageCount;
 	// 数据
 	private List<T> list;
 
@@ -78,17 +78,17 @@ public class PageDTO<T> implements Serializable {
 	}
 
 	/**
-	 * @return the pageCount
+	 * @return the queryriteria
 	 */
-	public int getPageCount() {
-		return pageCount;
+	public T getQueryriteria() {
+		return queryriteria;
 	}
 
 	/**
-	 * @param pageCount the pageCount to set
+	 * @param queryriteria the queryriteria to set
 	 */
-	public void setPageCount(int pageCount) {
-		this.pageCount = pageCount;
+	public void setQueryriteria(T queryriteria) {
+		this.queryriteria = queryriteria;
 	}
 
 	/**

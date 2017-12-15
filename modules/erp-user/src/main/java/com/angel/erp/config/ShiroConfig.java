@@ -3,6 +3,8 @@
  */
 package com.angel.erp.config;
 
+import java.util.Map;
+
 import org.springframework.context.annotation.Configuration;
 
 import com.angel.erp.common.config.AbstractShiroConfig;
@@ -15,5 +17,14 @@ import com.angel.erp.common.config.AbstractShiroConfig;
  */
 @Configuration
 public class ShiroConfig extends AbstractShiroConfig {
+
+	/* 
+	 * @see com.angel.erp.common.config.AbstractShiroConfig#getFilterRuleMap()
+	 */
+	@Override
+	public Map<String, String> getFilterRuleMap() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
