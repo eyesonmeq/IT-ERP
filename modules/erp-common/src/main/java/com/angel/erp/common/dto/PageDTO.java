@@ -36,6 +36,15 @@ public class PageDTO<T> implements Serializable {
 	}
 
 	/**
+	 * 获取开始行
+	 *
+	 * @return 
+	 */
+	public int getStartRow() {
+		return (currentPage - 1) * pageSize;
+	}
+
+	/**
 	 * @return the currentPage
 	 */
 	public int getCurrentPage() {

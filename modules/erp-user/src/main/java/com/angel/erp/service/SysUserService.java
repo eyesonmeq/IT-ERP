@@ -20,10 +20,11 @@ public interface SysUserService {
 	 * 分页查询
 	 *
 	 * @param page
+	 * @param queryCondition
 	 * @return
 	 * @throws ServiceException 
 	 */
-	PageDTO<SysUserDTO> listByPage(PageDTO<SysUserDTO> page) throws ServiceException;
+	PageDTO<SysUserDTO> listByPage(PageDTO<SysUserDTO> page,SysUserDTO queryCondition) throws ServiceException;
 
 	/**
 	 * 查询所有数据
@@ -34,13 +35,22 @@ public interface SysUserService {
 	List<SysUserDTO> listAll() throws ServiceException;
 
 	/**
-	 * 根据ID获取数据
+	 * 根据ID查询
 	 *
-	 * @param account
+	 * @param id
 	 * @return
 	 * @throws ServiceException 
 	 */
-	SysUserDTO get(String account) throws ServiceException;
+	SysUserDTO get(Long id) throws ServiceException;
+	
+	/**
+	 * 根据用户名查询
+	 *
+	 * @param userName
+	 * @return
+	 * @throws ServiceException 
+	 */
+	SysUserDTO getByName(String userName) throws ServiceException;
 
 	/**
 	 * 添加
