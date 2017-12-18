@@ -15,75 +15,136 @@ import com.angel.erp.common.util.JsonUtil;
  */
 public class SysUserDTO implements Serializable {
 
-	// (用一句话描述这个变量表示什么). 
 	private static final long serialVersionUID = -7535143086026356454L;
-	// 账户
-	private String account;
-	// 姓名
-	private String name;
-	// 密码
-	private String password;
-	// 状态
-	private Short state;
-	// 盐
+	/**
+	 * 主键
+	 */
+	private Long id;
+	/**
+	 * 创建时间
+	 */
+	private String gmtCreate;
+	/**
+	 * 变更时间
+	 */
+	private String gmtModified;
+	/**
+	 * 用户名
+	 */
+	private String userName;
+	/**
+	 * 用户昵称
+	 */
+	private String nickname;
+	/**
+	 * 密码
+	 */
+	private String userPassword;
+	/**
+	 * 用户状态（1：正常，2：停用，3：锁定）
+	 */
+	private Short userState;
+	/**
+	 * 盐
+	 */
 	private String salt;
-	// 创建时间
-	private String createTime;
 
 	/**
-	 * @return the account
+	 * @return the id
 	 */
-	public String getAccount() {
-		return account;
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * @param account the account to set
+	 * @param id the id to set
 	 */
-	public void setAccount(String account) {
-		this.account = account;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
-	 * @return the name
+	 * @return the gmtCreate
 	 */
-	public String getName() {
-		return name;
+	public String getGmtCreate() {
+		return gmtCreate;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param gmtCreate the gmtCreate to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setGmtCreate(String gmtCreate) {
+		this.gmtCreate = gmtCreate;
 	}
 
 	/**
-	 * @return the password
+	 * @return the gmtModified
 	 */
-	public String getPassword() {
-		return password;
+	public String getGmtModified() {
+		return gmtModified;
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param gmtModified the gmtModified to set
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setGmtModified(String gmtModified) {
+		this.gmtModified = gmtModified;
 	}
 
 	/**
-	 * @return the state
+	 * @return the userName
 	 */
-	public Short getState() {
-		return state;
+	public String getUserName() {
+		return userName;
 	}
 
 	/**
-	 * @param state the state to set
+	 * @param userName the userName to set
 	 */
-	public void setState(Short state) {
-		this.state = state;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * @return the nickname
+	 */
+	public String getNickname() {
+		return nickname;
+	}
+
+	/**
+	 * @param nickname the nickname to set
+	 */
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	/**
+	 * @return the userPassword
+	 */
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	/**
+	 * @param userPassword the userPassword to set
+	 */
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+
+	/**
+	 * @return the userState
+	 */
+	public Short getUserState() {
+		return userState;
+	}
+
+	/**
+	 * @param userState the userState to set
+	 */
+	public void setUserState(Short userState) {
+		this.userState = userState;
 	}
 
 	/**
@@ -98,20 +159,6 @@ public class SysUserDTO implements Serializable {
 	 */
 	public void setSalt(String salt) {
 		this.salt = salt;
-	}
-
-	/**
-	 * @return the createTime
-	 */
-	public String getCreateTime() {
-		return createTime;
-	}
-
-	/**
-	 * @param createTime the createTime to set
-	 */
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
 	}
 
 	@Override

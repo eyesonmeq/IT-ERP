@@ -18,19 +18,24 @@ public class PageDTO<T> implements Serializable {
 
 	private static final long serialVersionUID = 8501035650459467858L;
 	// 当前页数 
-	private int currentPage = 1;
+	private Integer currentPage = 1;
 	// 每页条数
-	private int pageSize = 10;
+	private Integer pageSize = 10;
 	// 查询条件
 	private T queryriteria;
 	// 总条数
-	private int totalCount;
+	private Long totalCount;
 	// 数据
 	private List<T> list;
 
-	public PageDTO() {}
+	public PageDTO() {
+		this.currentPage = 1;
+		this.pageSize = 10;
+	}
 
-	public PageDTO(List<T> list, int totalCount) {
+	public PageDTO(List<T> list, Long totalCount) {
+		this.currentPage = 1;
+		this.pageSize = 10;
 		this.list = list;
 		this.totalCount = totalCount;
 	}
@@ -40,49 +45,49 @@ public class PageDTO<T> implements Serializable {
 	 *
 	 * @return 
 	 */
-	public int getStartRow() {
+	public Integer getStartRow() {
 		return (currentPage - 1) * pageSize;
 	}
 
 	/**
 	 * @return the currentPage
 	 */
-	public int getCurrentPage() {
+	public Integer getCurrentPage() {
 		return currentPage;
 	}
 
 	/**
 	 * @param currentPage the currentPage to set
 	 */
-	public void setCurrentPage(int currentPage) {
+	public void setCurrentPage(Integer currentPage) {
 		this.currentPage = currentPage;
 	}
 
 	/**
 	 * @return the pageSize
 	 */
-	public int getPageSize() {
+	public Integer getPageSize() {
 		return pageSize;
 	}
 
 	/**
 	 * @param pageSize the pageSize to set
 	 */
-	public void setPageSize(int pageSize) {
+	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
 	}
 
 	/**
 	 * @return the totalCount
 	 */
-	public int getTotalCount() {
+	public Long getTotalCount() {
 		return totalCount;
 	}
 
 	/**
 	 * @param totalCount the totalCount to set
 	 */
-	public void setTotalCount(int totalCount) {
+	public void setTotalCount(Long totalCount) {
 		this.totalCount = totalCount;
 	}
 

@@ -18,10 +18,8 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -85,17 +83,17 @@ public abstract class AbstractWebMvcConfig extends WebMvcConfigurerAdapter {
 		registry.addMapping("/**");
 	}
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new HandlerInterceptorAdapter() {
-			@Override
-			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-					throws Exception {
-				// 可以自定义拦截器
-				return true;
-			}
-		});
-	}
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(new HandlerInterceptorAdapter() {
+//			@Override
+//			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+//					throws Exception {
+//				// 可以自定义拦截器
+//				return true;
+//			}
+//		});
+//	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

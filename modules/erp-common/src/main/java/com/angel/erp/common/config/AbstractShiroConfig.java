@@ -27,6 +27,17 @@ import org.springframework.context.annotation.DependsOn;
 public abstract class AbstractShiroConfig {
 
 	/**
+	 * 注册realm
+	 *
+	 * @return 
+	 */
+	@Bean(name = "JWTRealm")
+	public JWTRealm getJWTRealm() {
+		JWTRealm realm = new JWTRealm();
+		return realm;
+	}
+
+	/**
 	 * SecurityManager，权限管理，这个类组合了登录，登出，权限，session的处理，是个比较重要的类。
 	 *
 	 * @return 
@@ -35,7 +46,7 @@ public abstract class AbstractShiroConfig {
 	public DefaultWebSecurityManager securityManager() {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
 		// 使用自己的realm
-		manager.setRealm(new MyRealm());
+		manager.setRealm(this.getJWTRealm());
 		// 关闭shiro自带的session
 		DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
 		DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
@@ -63,12 +74,13 @@ public abstract class AbstractShiroConfig {
 		Map<String, String> filterRuleMap = new LinkedHashMap<String, String>();
 		// 配置不会被拦截的链接 顺序判断
 		filterRuleMap.put("/static/**", "anon");
+		filterRuleMap.put("/erp/userLogin", "anon");
 		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
-		filterRuleMap.put("/logout", "logout");
+		filterRuleMap.put("/erp/logout", "logout");
 		//<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
 		//<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
 		filterRuleMap.put("/**", "authc");
-		if(this.getFilterRuleMap() != null) {
+		if (this.getFilterRuleMap() != null) {
 			filterRuleMap.putAll(this.getFilterRuleMap());
 		}
 		filterRuleMap.put("/edit", "jwt, perms[edit]");
@@ -76,8 +88,8 @@ public abstract class AbstractShiroConfig {
 		filterRuleMap.put("/annotation/**", "jwt");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterRuleMap);
 
-		shiroFilterFactoryBean.setLoginUrl("/login");
-		shiroFilterFactoryBean.setSuccessUrl("/");
+		shiroFilterFactoryBean.setLoginUrl("/erp/login.html");
+		shiroFilterFactoryBean.setSuccessUrl("/erp/index.html");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		return shiroFilterFactoryBean;
 	}

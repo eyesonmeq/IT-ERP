@@ -5,6 +5,7 @@ package com.angel.erp.service;
 
 import java.util.List;
 
+import com.angel.erp.common.dto.AuthenticationTokenDTO;
 import com.angel.erp.common.dto.PageDTO;
 import com.angel.erp.common.dto.system.SysUserDTO;
 import com.angel.erp.common.exception.ServiceException;
@@ -24,7 +25,7 @@ public interface SysUserService {
 	 * @return
 	 * @throws ServiceException 
 	 */
-	PageDTO<SysUserDTO> listByPage(PageDTO<SysUserDTO> page,SysUserDTO queryCondition) throws ServiceException;
+	PageDTO<SysUserDTO> listByPage(PageDTO<SysUserDTO> page, SysUserDTO queryCondition) throws ServiceException;
 
 	/**
 	 * 查询所有数据
@@ -42,7 +43,7 @@ public interface SysUserService {
 	 * @throws ServiceException 
 	 */
 	SysUserDTO get(Long id) throws ServiceException;
-	
+
 	/**
 	 * 根据用户名查询
 	 *
@@ -71,8 +72,25 @@ public interface SysUserService {
 	/**
 	 * 删除
 	 *
-	 * @param account
+	 * @param id
 	 * @throws ServiceException 
 	 */
-	void delete(String account) throws ServiceException;
+	void delete(Long id) throws ServiceException;
+
+	/**
+	 * 根据用户名删除
+	 *
+	 * @param userName
+	 * @throws ServiceException 
+	 */
+	void deleteByUserName(String userName) throws ServiceException;
+	
+	/**
+	 * 用户登录
+	 *
+	 * @param token
+	 * @return
+	 * @throws ServiceException 
+	 */
+	AuthenticationTokenDTO login(AuthenticationTokenDTO token) throws ServiceException;
 }

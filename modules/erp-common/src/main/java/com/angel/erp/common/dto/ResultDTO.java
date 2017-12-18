@@ -30,12 +30,21 @@ public class ResultDTO<T> implements Serializable {
 		this.setData(data);
 	}
 
-	public static ResultDTO<Object> genSuccessResult() {
-		return new ResultDTO<Object>().setCode(ResultCode.SUCCESS.code).setMessage(DEFAULT_SUCCESS_MESSAGE);
+	public void genSuccessResult() {
+		this.setCode(ResultCode.SUCCESS.code);
+		this.setMessage(DEFAULT_SUCCESS_MESSAGE);
 	}
 
-	public static ResultDTO<Object> genFailResult(String message) {
-		return new ResultDTO<Object>().setCode(ResultCode.FAIL.code).setMessage(message);
+	public void genSuccessResult(T data) {
+		this.setCode(ResultCode.SUCCESS.code);
+		this.setMessage(DEFAULT_SUCCESS_MESSAGE);
+		this.setData(data);
+	}
+
+	public void genFailResult(String message) {
+		this.setCode(ResultCode.FAIL.code);
+		this.setMessage(message);
+		this.setData(data);
 	}
 
 	public int getCode() {

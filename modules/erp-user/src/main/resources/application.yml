@@ -7,6 +7,7 @@ logging:
   file: logs/erp-system.log
   level:
     tk.mybatis: DEBUG
+    com.angel.erp: DEBUG
   
 spring:
   datasource:

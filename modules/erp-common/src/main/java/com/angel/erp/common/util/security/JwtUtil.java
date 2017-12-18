@@ -10,7 +10,9 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 
 import com.angel.erp.common.constant.JWTConstant;
 import com.angel.erp.common.dto.AuthenticationTokenDTO;
@@ -50,11 +52,9 @@ public class JwtUtil {
 	 *
 	 * @param name
 	 * @param password
-	 * @param audience
-	 * @param issuer
 	 * @return 
 	 */
-	public static String createJWT(String name, String password, String audience, String issuer) {
+	public static String createJWT(String name, String password) {
 		long TTLMillis = JWTConstant.JWT_EXPIRES_SECOND;
 		String base64Security = JWTConstant.JWT_BASE64_SECRET;
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -64,9 +64,10 @@ public class JwtUtil {
 		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 		//添加构成JWT的参数  
-		JwtBuilder builder = Jwts.builder().setHeaderParam(JWTConstant.TYPE, "JWT")
-				.claim(JWTConstant.USER_PASSWORD, password).claim(JWTConstant.USER_ACCOUNT, name).setIssuer(issuer)
-				.setAudience(audience).signWith(signatureAlgorithm, signingKey);
+		JwtBuilder builder = Jwts.builder().setHeaderParam(JWTConstant.TYPE, JWTConstant.TOKENHEAD)
+				.claim(JWTConstant.USER_PASSWORD, password).claim(JWTConstant.USER_ACCOUNT, name)
+				.setIssuer(JWTConstant.JWT_NAME).setAudience(JWTConstant.JWT_CLIENT_ID)
+				.signWith(signatureAlgorithm, signingKey);
 		//添加Token过期时间  
 		if (TTLMillis >= 0) {
 			long expMillis = nowMillis + TTLMillis;
@@ -87,4 +88,16 @@ public class JwtUtil {
 		AuthenticationTokenDTO user = parseJWT(currentUser.getPrincipal().toString());
 		return user == null ? null : user;
 	}
+
+	/**
+	 * 生成密码
+	 *
+	 * @param password
+	 * @param salt
+	 * @return 
+	 */
+	public static String createPwd(String password, String salt) {
+		return new SimpleHash("md5", password, ByteSource.Util.bytes(salt), 2).toHex();
+	}
+	
 }

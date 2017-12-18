@@ -3,15 +3,20 @@
  */
 package com.angel.erp.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.angel.erp.common.dto.AuthenticationTokenDTO;
+import com.angel.erp.common.dto.ResultDTO;
+import com.angel.erp.common.util.LogUtil;
+import com.angel.erp.service.SysUserService;
 
 /**
  * 登录控制器
@@ -19,25 +24,44 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @date: 2017年12月10日 上午12:02:11
  * @author li_ming 
  */
+@Controller
+@RequestMapping(value = "/erp")
 public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	/**
+	 * 用户管理
+	 */
+	@Autowired
+	private SysUserService userService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam(value = "username", required = true) String userName,
-			@RequestParam(value = "password", required = true) String password,
-			@RequestParam(value = "rememberMe", required = true, defaultValue = "false") boolean rememberMe) {
-		logger.info("==========" + userName + password + rememberMe);
-		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
-		token.setRememberMe(rememberMe);
+	/**
+	 * 登录界面
+	 *
+	 * @param model
+	 * @return 
+	 */
+	@RequestMapping(value = "/login.html")
+	public String loginPage(Model model) {
+		return "login";
+	}
 
+	/**
+	 * 用户登录
+	 *
+	 * @param token
+	 * @return 
+	 */
+	@ResponseBody
+	@PostMapping("/userLogin")
+	public ResultDTO<AuthenticationTokenDTO> login(@RequestBody AuthenticationTokenDTO token) {
+		ResultDTO<AuthenticationTokenDTO> result = new ResultDTO<AuthenticationTokenDTO>();
 		try {
-			subject.login(token);
-		} catch (AuthenticationException e) {
-			e.printStackTrace();
-			//            rediect.addFlashAttribute("errorText", "您的账号或密码输入错误!");
-			return "{\"Msg\":\"您的账号或密码输入错误\",\"state\":\"failed\"}";
+			token = userService.login(token);
+			result.genSuccessResult(token);
+		} catch (Exception e) {
+			result.genFailResult(e.getMessage());
+			LogUtil.error(logger, e);
 		}
-		return "{\"Msg\":\"登陆成功\",\"state\":\"success\"}";
+		return result;
 	}
 }

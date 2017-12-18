@@ -2,12 +2,19 @@ package com.angel.erp.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.BeanUtils;
 
+import com.angel.erp.common.dto.system.SysUserDTO;
 import com.angel.erp.common.util.JsonUtil;
 
 /**
@@ -69,6 +76,34 @@ public class SysUserDO implements Serializable {
 	 * 盐
 	 */
 	private String salt;
+
+	/**
+	 * Creates a new instance of SysUserDO. 
+	 * 
+	 */
+	public SysUserDO() {
+
+	}
+
+	/**
+	 * Creates a new instance of SysUserDO. 
+	 * 
+	 * @param dto
+	 */
+	public SysUserDO(SysUserDTO dto) {
+		BeanUtils.copyProperties(dto, this);
+	}
+
+	/**
+	 * 转换成DTO
+	 *
+	 * @return 
+	 */
+	public SysUserDTO toDTO() {
+		SysUserDTO dto = new SysUserDTO();
+		BeanUtils.copyProperties(this, dto);
+		return dto;
+	}
 
 	/**
 	 * 获取主键

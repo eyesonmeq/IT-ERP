@@ -14,12 +14,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.angel.erp.common.constant.ConfigConstant;
+import com.angel.erp.common.dto.AuthenticationTokenDTO;
 
 /**
  * Redis配置
@@ -83,9 +83,10 @@ public abstract class AbstractRedisConfig extends CachingConfigurerSupport {
 	 */
 	@Bean
 	@SuppressWarnings("rawtypes")
-	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory connectionFactory,
+	public RedisTemplate<String, AuthenticationTokenDTO> redisTemplate(RedisConnectionFactory connectionFactory,
 			RedisSerializer fastJson2JsonRedisSerializer) {
-		StringRedisTemplate template = new StringRedisTemplate(connectionFactory);
+		RedisTemplate<String, AuthenticationTokenDTO> template = new RedisTemplate<String, AuthenticationTokenDTO>();
+		template.setConnectionFactory(connectionFactory);
 		//template.setKeySerializer(new StringRedisSerializer());
 		template.setValueSerializer(fastJson2JsonRedisSerializer);
 		template.afterPropertiesSet();
