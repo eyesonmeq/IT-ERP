@@ -17,17 +17,16 @@ spring:
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    max-active: 20
-    max-idle: 8
-    min-idle: 8
-    initial-size: 10
-    validation-query: SELECT 1 FROM DUAL
-    test-on-borrow: false
-    test-on-return: false
-    test-while-idle: true
-    time-between-eviction-runs-millis: 60000
-    min-evictable-idle-time-millis: 300000
-    max-wait: 60000
+    maxActive: 20
+    minIdle: 8
+    initialSize: 10
+    maxWait: 60000
+    validationQuery: SELECT 1 FROM DUAL
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
   mybatis:
     type-aliases-package: com.angel.erp.model
   mapper:
@@ -38,7 +37,7 @@ spring:
     helperDialect: mysql
     reasonable: true
     supportMethodsArguments: true
-    params: count=countSql    
+    params: count=countSql
   mvc:
     view:
       prefix: classpath:/templates/

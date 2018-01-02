@@ -4,7 +4,8 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{F8EFEAA7-0F9D-4214-9911-EF8658B8BFAC}" Name="IT-ERP" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="IT-ERP.prj"/>
+		<Model Expanded="Yes" ID="{F8EFEAA7-0F9D-4214-9911-EF8658B8BFAC}" Loaded="No" Name="IT-ERP" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="IT-ERP.prj"/>
+		<Model Expanded="Yes" ID="{0DD7A3FE-57F4-405F-8D11-248829E88436}" Name="shop-mall" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="/eclipse/workspace/shop-mall/doc/shop-mall/shop-mall.prj"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>

@@ -1,0 +1,8 @@
+include ':spring-boot-sample-simple'
+include ':spring-boot-sample-logback'
+include ':spring-boot-sample-actuator'
+include ':spring-boot-sample-profile'
+include ':spring-boot-sample-web-static'
+include ':spring-boot-sample-web-ui'
+
+rootProject.name = 'spring-boot-samples'

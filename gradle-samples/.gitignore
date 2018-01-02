@@ -1,0 +1,25 @@
+# 自定义忽略文件
+# Java Generated
+*.class
+*.jar
+*.war
+*.ear
+
+# gradle
+.gradle/
+bin/
+build/
+npm-debug.log.*
+
+# Spring Generated
+.springBeans
+
+# Eclipse Generated
+.classpath
+.project
+.settings/
+.metadata/
+target/
+
+# Log Files
+*.log
